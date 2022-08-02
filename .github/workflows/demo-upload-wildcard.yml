@@ -1,6 +1,6 @@
 name: demo-wildcard-artifact
 on:
-  pull_request:
+  push:
 
 jobs:
   demo:
