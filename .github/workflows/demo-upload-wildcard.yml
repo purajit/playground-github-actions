@@ -1,0 +1,41 @@
+name: demo-wildcard-artifact
+on:
+  pull_request:
+
+jobs:
+  demo:
+    name: demo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: file1
+        run: touch path1/path2/f
+
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: fs
+          path: **/f
+          retention-days: 1
+
+      - name: file1
+        run: rm path1/path2/f
+
+      - name: file2
+        run: touch pathA/pathB/f
+
+      - name: Publish artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: fs
+          path: **/f
+          retention-days: 1
+
+      - uses: actions/download-artifact@v3
+        continue-on-error: true
+        with:
+          name: fs
+          path: ~/fs/
+
+      - name: ls
+        run: ls -R ~/fs
