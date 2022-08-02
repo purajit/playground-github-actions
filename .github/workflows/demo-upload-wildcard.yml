@@ -9,7 +9,9 @@ jobs:
 
     steps:
       - name: file1
-        run: touch ~/path1/path2/f
+        run: |
+          mkdir -p ~/path1/path2
+          touch ~/path1/path2/f
 
       - name: Publish artifact
         uses: actions/upload-artifact@v3
@@ -18,11 +20,10 @@ jobs:
           path: ~/**/f
           retention-days: 1
 
-      - name: file1
-        run: rm ~/path1/path2/f
-
       - name: file2
-        run: touch pathA/pathB/f
+        run: |
+          mkdir -p ~/pathA/pathB
+          touch ~/pathA/pathB/f
 
       - name: Publish artifact
         uses: actions/upload-artifact@v3
